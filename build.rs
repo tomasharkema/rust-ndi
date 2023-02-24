@@ -7,7 +7,7 @@ use std::{env, fs};
 
 fn choose_source_dir() -> Option<String> {
     // Follow the 'recommended' install path
-    if let Ok(path) = env::var("NDI_RUNTIME_DIR_V3") {
+    if let Ok(path) = env::var("NDI_RUNTIME_DIR_V5") {
         if Path::new(&path).exists() {
             return Some(path);
         }
@@ -32,7 +32,7 @@ fn main() {
         let source_path = Path::new(&path);
         let dest_path = Path::new(&env::var("OUT_DIR").unwrap()).join("../../../deps");
         fs::copy(
-            source_path.join("..\\..\\NewTek NDI 3.8 SDK\\Lib\\x64\\Processing.NDI.Lib.x64.lib"),
+            source_path.join("..\\..\\NDI 5 SDK\\Lib\\x64\\Processing.NDI.Lib.x64.lib"),
             dest_path.join("Processing.NDI.Lib.x64.lib"),
         )
         .expect("copy Processing.NDI.Lib.x64.lib");
