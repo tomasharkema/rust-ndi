@@ -44,16 +44,16 @@ fn main() {
 #[cfg(target_os = "macos")]
 fn main() {
 
-    let path = " /Library/NDI SDK for Apple/lib/macOS";
+    let path = "/Library/NDI SDK for Apple/lib/macOS";
 
         let source_path = Path::new(&path);
         let dest_path = Path::new(&env::var("OUT_DIR").unwrap()).join("../../../deps");
 
         let source_file = source_path.join("libndi.dylib");
+        let dest_file = dest_path.join("libndi.dylib");
+        let s = &format!("copy libndi.dylib '{}' '{}'", source_file.to_str().unwrap(), dest_file.to_str().unwrap());
 
-        let s = &format!("copy libndi.dylib {}", source_file.to_str().unwrap());
-
-        fs::copy(source_file, dest_path.join("libndi.dylib")).expect(s);
+        fs::copy(source_file, dest_file).expect(s);
 
 //        let sl_res = std::os::unix::fs::symlink(Path::new("libndi.so.3"), dest_path.join("libndi.so"));
 //        if let Err(e) = sl_res {
