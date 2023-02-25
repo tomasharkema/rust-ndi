@@ -41,6 +41,34 @@ fn main() {
     println!("cargo:rustc-link-lib=Processing.NDI.Lib.x64");
 }
 
+#[cfg(target_os = "macos")]
+fn main() {
+
+    let path = " /Library/NDI SDK for Apple/lib/macOS";
+
+        let source_path = Path::new(&path);
+        let dest_path = Path::new(&env::var("OUT_DIR").unwrap()).join("../../../deps");
+
+        let source_file = source_path.join("libndi.dylib");
+
+        let s = &format!("copy libndi.dylib {}", source_file.to_str().unwrap());
+
+        fs::copy(source_file, dest_path.join("libndi.dylib")).expect(s);
+
+//        let sl_res = std::os::unix::fs::symlink(Path::new("libndi.so.3"), dest_path.join("libndi.so"));
+//        if let Err(e) = sl_res {
+//            if e.kind() != ErrorKind::AlreadyExists {
+//                panic!("Unknown error: {}", e);
+//            }
+//        }
+
+
+     if cfg!(not(feature = "dynamic-link")) {
+         println!("cargo:rustc-link-lib=ndi");
+     }
+}
+
+
 #[cfg(target_os = "linux")]
 fn main() {
     let source_dir = choose_source_dir();
