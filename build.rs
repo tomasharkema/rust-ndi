@@ -36,17 +36,9 @@ fn main() {
             dest_path.join("Processing.NDI.Lib.x64.lib"),
         )
         .expect("copy Processing.NDI.Lib.x64.lib");
-        fs::copy(
-            source_path.join("Processing.NDI.Lib.x64.dll"),
-            dest_path.join("Processing.NDI.Lib.x64.dll"),
-        )
-        .expect("copy Processing.NDI.Lib.x64.dll");
     }
 
-    if cfg!(not(feature = "dynamic-link")) {
-        // Static link against it
-        println!("cargo:rustc-link-lib=Processing.NDI.Lib.x64");
-    }
+    println!("cargo:rustc-link-lib=Processing.NDI.Lib.x64");
 }
 
 #[cfg(target_os = "linux")]
